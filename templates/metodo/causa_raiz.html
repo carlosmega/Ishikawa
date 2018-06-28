@@ -1,0 +1,23 @@
+{% extends 'base/base.html' %}
+
+{% block content %} 
+{% include 'componentes/navbar.html' %}
+
+<div class="container">
+    <div class="row">
+        
+        <div class="col">
+            <h4>Ingresar la causa raiz de tus problemas</h4><br><br>
+            <form action="" method="post">{% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Ingresar">
+            </form>
+        </div>
+    
+    </div>
+</div>
+
+
+
+
+{% endblock %}

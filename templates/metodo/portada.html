@@ -1,0 +1,35 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+{% include 'componentes/navbar.html' %}
+<div class="container">
+    <div class="row">
+        <div class="col mt-4">
+            <div class="col">
+                <div class="jumbotron">
+                    <h1 class="display-4">Hello, world!</h1>
+                    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or
+                        information.</p>
+                    <hr class="my-4">
+                    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                    <p class="lead">
+                        <a class="btn btn-primary btn-lg" href="{% url 'metodo:hallazgo' %}" role="button">Crear Hallazgo</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col mt-4">
+            <div class="col">
+                <h4>Actividades por vencer y vencidas</h4>
+            </div>
+            <div class="col">
+                <h4>Hola mundiles</h4>
+            </div>
+
+        </div>
+        
+    </div>
+
+    
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+{% include 'componentes/navbar.html' %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <h2>Aqui va numero de causas</h2>
+        </div>
+        <div class="col-6">
+            <form method="post">{% csrf_token %}
+                <div class="row">
+                    <div class="col">
+                        <h5>Materiales</h5>
+                        {{ formset.management_form }} {% for form in formset|slice:"0:6" %} {{ form.id }}
+                        <p>{{ form.causa }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="col">
+                        <h5>Procesos</h5>
+                        {{ formset.management_form }} {% for form in formset|slice:"6:12" %} {{ form.id }}
+                        <p>{{ form.causa }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-4">
+                        <h5>Materiales</h5>
+                        {{ formset.management_form }} {% for form in formset|slice:"0:6" %} {{ form.id }}
+                        <p>{{ form.causa }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="col-4">
+                        <h5>Procesos</h5>
+                        {{ formset.management_form }} {% for form in formset|slice:"6:12" %} {{ form.id }}
+                        <p>{{ form.causa }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <input type="submit" value="Send">
+            </form>
+        </div>
+        <div class="col">
+            <h2>{{ obj }}</h2>
+        </div>
+    </div>
+</div>
+{% endblock %}
