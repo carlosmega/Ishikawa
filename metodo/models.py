@@ -28,6 +28,11 @@ class Causa(models.Model):
     def __str__(self):
         return self.causa
 
+    def save(self):
+        self.rpn = self.sev * self.det * self.occ
+        super(Causa, self).save()
+
+
     
 
 

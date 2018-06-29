@@ -20,6 +20,8 @@ from django.views.generic import TemplateView
 from .views import crear_hallazgo
 from .views import crear_causas
 from .views import ListaHallazgos
+from .views import amef
+from .views import kaizen
 
 app_name = 'metodo'
 
@@ -27,5 +29,7 @@ urlpatterns = [
     url(r'^hallazgo/$', crear_hallazgo, name='hallazgo'),
     url(r'^portada/$', TemplateView.as_view(template_name='metodo/portada.html'), name='portada'),
     url(r'^hallazgo/(?P<pk>\d+)/$', crear_causas, name='causas'),
+    url(r'^hallazgo/(?P<pk>\d+)/amef/$', amef, name='amef'),
+    url(r'^hallazgo/(?P<pk>\d+)/kaizen/$', kaizen, name='kaizen'),
     url(r'^lista/', ListaHallazgos.as_view(), name='lista_hallazgos'),
 ]

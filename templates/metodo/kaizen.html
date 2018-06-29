@@ -1,0 +1,41 @@
+{% extends 'base/base.html' %} 
+{% block content %}
+{% include 'componentes/navbar.html' %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form method="post"> {% csrf_token %}
+                <div class="row">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Causa</th>
+                                <th scope="col">RPN</th>
+                                <th scope="col">Solucion</th>
+                                <th scope="col">Responsable</th>
+                                <th scope="col">Fecha de Cierre</th>
+                                <th scope="col">Comentarios</th>
+                            </tr>
+                        </thead>
+                        {{ formset.management_form }} {% for form in formset %} {{ form.id }}
+                        <tbody>
+                            <tr>
+                                <th scope="row">{{ form.causa }}</th>
+                                <td>{{ form.rpn }}</td>
+                                <td>{{ form.solucion }}</td>
+                                <td>{{ form.responsable }}</td>
+                                <td>{{ form.fecha_cierre }}</td>
+                                <td>{{ form.comentarios }}</td>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                </div>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

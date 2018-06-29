@@ -9,37 +9,45 @@
             <h2>Aqui va numero de causas</h2>
         </div>
         <div class="col-6">
-            <form method="post">{% csrf_token %}
+            <form method="POST">{% csrf_token %}
                 <div class="row">
                     <div class="col">
-                        <h5>Materiales</h5>
-                        {{ formset.management_form }} {% for form in formset|slice:"0:6" %} {{ form.id }}
-                        <p>{{ form.causa }}</p>
-                        {% endfor %}
+                        <div class="row">
+                            <h4>Materiales</h4>
+                            {{ formset.management_form }} {% for form in formset|slice:"0:5" %} {{ form.id }}
+                            <div class="col-10 list-group-item-action">{{ form.causa }}</div>
+                            {% endfor %}
+                        </div>
                     </div>
                     <div class="col">
-                        <h5>Procesos</h5>
-                        {{ formset.management_form }} {% for form in formset|slice:"6:12" %} {{ form.id }}
-                        <p>{{ form.causa }}</p>
-                        {% endfor %}
+                        <div class="row">
+                            <h4>Herramientas</h4>
+                            {{ formset.management_form }}{% for form in formset|slice:"5:10" %}{{ form.id }}
+                            <div class="col-10">{{ form.causa }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="w-100">
+                        <hr>
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            {{ formset.management_form }}{% for form in formset|slice:"10:15" %}{{ form.id }}
+                            <div class="col-10">{{ form.causa }}</div>
+                            {% endfor %}
+                            <h4>Mano de Obra</h4>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            {{ formset.management_form }}{% for form in formset|slice:"15:20" %}{{ form.id }}
+                            <div class="col-10">{{ form.causa }}</div>
+                            {% endfor %}
+                            <h4>Procesos</h4>
+                        </div>
                     </div>
                 </div>
-                <hr>
-                <div class="row">
-                    <div class="col-4">
-                        <h5>Materiales</h5>
-                        {{ formset.management_form }} {% for form in formset|slice:"0:6" %} {{ form.id }}
-                        <p>{{ form.causa }}</p>
-                        {% endfor %}
-                    </div>
-                    <div class="col-4">
-                        <h5>Procesos</h5>
-                        {{ formset.management_form }} {% for form in formset|slice:"6:12" %} {{ form.id }}
-                        <p>{{ form.causa }}</p>
-                        {% endfor %}
-                    </div>
-                </div>
-                <input type="submit" value="Send">
+                <input class="float-right position-sticky fixed-top sticky-top align-top" type="submit" value="Actualizar">
             </form>
         </div>
         <div class="col">

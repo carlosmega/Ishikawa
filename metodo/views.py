@@ -20,7 +20,11 @@ def crear_hallazgo(request):
     if request.method == 'POST':
         form = HallazgoForm(request.POST or None)
         if form.is_valid():
-            form.save()
+            #obj = Hallazgo.objects.get(pk=pk)
+            obj = form.save(commit=False)
+            #obj.pk = request.id
+            obj.save()
+            return redirect('metodo:causas', pk=obj.pk)
     else:
         form = HallazgoForm(request.POST or None)
 
@@ -31,7 +35,7 @@ def crear_hallazgo(request):
 
 def crear_causas(request, pk):
     obj = Hallazgo.objects.get(pk=pk)
-    Causaformset = inlineformset_factory(Hallazgo, Causa, fields=('hallazgo', 'causa'), extra=12)
+    Causaformset = inlineformset_factory(Hallazgo, Causa, fields=('hallazgo', 'causa'), extra=20)
     if request.method == 'POST':
         formset = Causaformset(request.POST, instance=obj)
         if formset.is_valid():
@@ -45,4 +49,45 @@ def crear_causas(request, pk):
         'formset': formset,
     }
     return render(request, 'metodo/causa.html', context)
+
+
+def amef(request, pk):
+    #rpn = Hallazgo.objects.get(pk=pk).causa_set.all()
+    obj = Hallazgo.objects.get(pk=pk)
+    formsetCausa = inlineformset_factory(Hallazgo, Causa, fields=('hallazgo', 'causa', 'sev', 'det', 'occ', 'rpn'), extra=0)
+    if request.method == 'POST':
+        formset = formsetCausa(request.POST, instance=obj)
+        if formset.is_valid():
+            formset.save()
+            return redirect('metodo:amef', pk=pk)
+    else:
+        formset = formsetCausa(instance=obj)
+
+    context = {
+        'obj': obj,
+        'formset': formset,
+        #'rpn': rpn,
+
+    }
+    return render(request, 'metodo/amef.html', context)
+
+
+def kaizen(request, pk):
+    obj = Hallazgo.objects.get(pk=pk)
+
+    Causaformset = inlineformset_factory(Hallazgo, Causa, fields=('hallazgo', 'causa', 'rpn', 'solucion', 'responsable', 'fecha_cierre', 'comentarios'), extra=0)
+    if request.method == 'POST':
+        formset = Causaformset(request.POST, instance=obj, queryset=Causa.objects.filter(rpn__gt=3))
+        if formset.is_valid():
+            formset.save()
+            return redirect('metodo:kaizen', pk=pk)
+    else:
+        formset = Causaformset(instance=obj, queryset=Causa.objects.filter(rpn__gt=3))
+
+    context = {
+        'formset': formset,
+    }
+    
+    return render(request, 'metodo/kaizen.html', context)
+
 

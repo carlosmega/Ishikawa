@@ -6,4 +6,4 @@ from .models import Hallazgo
 class HallazgoForm(ModelForm):
     class Meta:
         model = Hallazgo
-        fields = ['hallazgo']
+        fields = '__all__'
