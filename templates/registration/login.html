@@ -1,19 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base/base.html" %} {% block content %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
-</head>
+<div class="container">
+    <div class='row text-center'>
+        <div class='col-sm-6 text-center col-sm-offset-3'>
+            <h1>Login</h1>
+            {% if form.errors %}
+            <p>Tu usuario y contrasena son incorrectos. Porfavor intenta de nuevo.</p>
+            {% endif %} {% if next != "/" and next is not None %} {% if user.is_authenticated %}
+            <p>Your account doesn't have access to this page. To proceed, please login with an account that has access.</p>
+            {% else %}
+            <p>Please login to see this page.</p>
+            {% endif %} {% endif %}
+    
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %} {{ form.as_p }}
+    
+                <input type="submit" value="login" />
+                <input type="hidden" name="next" value="{{ next }}" />
+            </form>
+    
+            <p>Need to
+                <a href='#'>register</a>?</p>
+        </div>
+    </div>
+    
+    {# Assumes you setup the password_reset view in your URLconf #} {% endblock %}
 
-<body>
-    <h2>Login</h2>
-    <form method="post">
-        {% csrf_token %} {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
-</body>
+</div>
 
-</html>
+

@@ -28,7 +28,35 @@ class Causa(models.Model):
     def __str__(self):
         return self.causa
 
+    def rpn_sesultado(self):
+        self.rpn = self.sev * self.det * self.occ
+        self.rpn.save()
+        return self.rpn
 
+    def save(self, *args, **kwargs):
+        try:
+            self.rpn = self.sev * self.det * self.occ
+            super().save(*args, **kwargs)
+        except:
+            super().save(*args, **kwargs)
+
+
+
+
+        
+
+
+        """
+        if self.sev == 'NoneType' or self.det == 'NoneType' or self.occ == 'NoneType':
+            print("ok")
+        elif self.rpn != 'NoneType':
+            self.rpn = self.sev * self.det * self.occ
+            super(Causa, self).save()
+        else:
+        """
+            
+      
+    
 
     
 

@@ -7,29 +7,35 @@
         <div class="col mt-4">
             <div class="col">
                 <div class="jumbotron">
-                    <h1 class="display-4">Hello, world!</h1>
-                    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or
-                        information.</p>
+                    <h1 class="display-4">Ishikawa App</h1>
+                    <p class="lead">En esta aplicación podrás hacer tus analisis para la mejora de tus procesos</p>
                     <hr class="my-4">
-                    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                    <p>Click abajo para crear un nuevo Ishikawa</p>
                     <p class="lead">
-                        <a class="btn btn-primary btn-lg" href="{% url 'metodo:hallazgo' %}" role="button">Crear Hallazgo</a>
+                        <a class="btn btn-primary btn-lg" href="{% url 'metodo:hallazgo' %}" role="button">Crear Ishikawa</a>
                     </p>
                 </div>
             </div>
         </div>
         <div class="col mt-4">
-            <div class="col">
-                <h4>Actividades por vencer y vencidas</h4>
+            <div class="row">
+                <div class="col">
+                    <div class="jumbotron">
+                        <h1 class="display-4">Consultar Lista</h1>
+                        <p class="lead">Revisa todos los diagramas que tienes en ejecucion</p>
+                        <hr class="my-4">
+                        <p>Click abajo para consultar la lista</p>
+                        <p class="lead">
+                            <a class="btn btn-success btn-lg" href="{% url 'metodo:lista_hallazgos' %}" role="button">Consultar Lista</a>
+                        </p>
+                    </div>
+                </div>
             </div>
-            <div class="col">
-                <h4>Hola mundiles</h4>
-            </div>
-
-        </div>
-        
+        </div>   
     </div>
-
-    
+    <p class="lead">
+        <a class="btn btn-success btn-lg" href="{% url 'logout' %}" role="button">Salir</a>
+    </p>
 </div>
+
 {% endblock %}

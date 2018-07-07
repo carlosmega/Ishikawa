@@ -6,7 +6,10 @@
 <div class="container">
     <div class="row">
         <div class="col-3">
-            <h2>Aqui va numero de causas</h2>
+            <h3># de Causas</h3>
+            <h2>{{ count_causas }}</h2>
+
+            
         </div>
         <div class="col-6">
             <form method="POST">{% csrf_token %}
@@ -15,7 +18,7 @@
                         <div class="row">
                             <h4>Materiales</h4>
                             {{ formset.management_form }} {% for form in formset|slice:"0:5" %} {{ form.id }}
-                            <div class="col-10 list-group-item-action">{{ form.causa }}</div>
+                            <div class="col-10 list-group-item-action">{{ form.causa }}{{ form.DELETE }}</div>
                             {% endfor %}
                         </div>
                     </div>
@@ -23,7 +26,7 @@
                         <div class="row">
                             <h4>Herramientas</h4>
                             {{ formset.management_form }}{% for form in formset|slice:"5:10" %}{{ form.id }}
-                            <div class="col-10">{{ form.causa }}</div>
+                            <div class="col-10">{{ form.causa }}{{ form.DELETE }}</div>
                             {% endfor %}
                         </div>
                     </div>
@@ -33,7 +36,7 @@
                     <div class="col">
                         <div class="row">
                             {{ formset.management_form }}{% for form in formset|slice:"10:15" %}{{ form.id }}
-                            <div class="col-10">{{ form.causa }}</div>
+                            <div class="col-10">{{ form.causa }}{{ form.DELETE }}</div>
                             {% endfor %}
                             <h4>Mano de Obra</h4>
                         </div>
@@ -41,7 +44,7 @@
                     <div class="col">
                         <div class="row">
                             {{ formset.management_form }}{% for form in formset|slice:"15:20" %}{{ form.id }}
-                            <div class="col-10">{{ form.causa }}</div>
+                            <div class="col-10">{{ form.causa }}{{ form.DELETE }}</div>
                             {% endfor %}
                             <h4>Procesos</h4>
                         </div>

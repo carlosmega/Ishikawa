@@ -3,24 +3,39 @@
 {% block content %} 
 {% include 'componentes/navbar.html' %}
 
-<div class="container">
-    <div class="row">
-        
-        <div class="col">
-            <h4>Ingresar la causa raiz de tus problemas</h4><br><br>
-            <form action="" method="post">{% csrf_token %}
-                {% for f in form %}
-                {{ f }}
-                 
-                 {% endfor %}
-                <input type="submit" value="Ingresar">
-            </form>
+<div class="container text-center">
+    <div class="row align-items-center ">
+        <div class="col justify-content-center mt-3 ">
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <h1 class="display-4">Define el Hallazgo</h1>
+                    <p class="lead">Haz una lluvia de ideas con tu equipo y define la el hallazgo que impacta ttu proceso <br>
+                        <mark>Ingresa maximo 50 caracteres</mark>
+                    </p>
+                </div>
+            </div>
         </div>
-    
     </div>
+    <form action="{% url 'metodo:hallazgo' %}" method="post">{% csrf_token %} 
+        {% for f in form %}
+        <div class="row">
+            <div class="col-10 ">
+                <input class="form-control" type="text" for="hallazgo" placeholder="Readonly input here…" name="hallazgo" value="{{ f.hallazgo }}"> 
+        {% endfor %}
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>
 </div>
 
-
-
-
 {% endblock %}
+
+
+
+
+
+
+
+

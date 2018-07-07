@@ -9,20 +9,25 @@ from .models import Causa
 from django.forms import inlineformset_factory
 
 from .forms import HallazgoForm
+from .forms import HallazgoCreateForm
+
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
-class ListaHallazgos(ListView):
+
+
+class ListaHallazgos(LoginRequiredMixin, ListView):
     template_name = 'metodo/lista_hallazgos.html'
     model = Hallazgo
     
 
+@login_required()
 def crear_hallazgo(request):
     if request.method == 'POST':
         form = HallazgoForm(request.POST or None)
         if form.is_valid():
-            #obj = Hallazgo.objects.get(pk=pk)
             obj = form.save(commit=False)
-            #obj.pk = request.id
             obj.save()
             return redirect('metodo:causas', pk=obj.pk)
     else:
@@ -33,9 +38,12 @@ def crear_hallazgo(request):
     }
     return render(request, 'metodo/causa_raiz.html', context)
 
+
+@login_required()
 def crear_causas(request, pk):
     obj = Hallazgo.objects.get(pk=pk)
-    Causaformset = inlineformset_factory(Hallazgo, Causa, fields=('hallazgo', 'causa'), extra=20)
+    count_causas = Hallazgo.objects.get(pk=pk).causa_set.all().count()
+    Causaformset = inlineformset_factory(Hallazgo, Causa, form=HallazgoCreateForm, extra=20)
     if request.method == 'POST':
         formset = Causaformset(request.POST, instance=obj)
         if formset.is_valid():
@@ -47,10 +55,12 @@ def crear_causas(request, pk):
     context = {
         'obj': obj,
         'formset': formset,
+        'count_causas': count_causas,
     }
     return render(request, 'metodo/causa.html', context)
 
 
+@login_required()
 def amef(request, pk):
     #rpn = Hallazgo.objects.get(pk=pk).causa_set.all()
     obj = Hallazgo.objects.get(pk=pk)
@@ -72,6 +82,7 @@ def amef(request, pk):
     return render(request, 'metodo/amef.html', context)
 
 
+@login_required()
 def kaizen(request, pk):
     obj = Hallazgo.objects.get(pk=pk)
 
