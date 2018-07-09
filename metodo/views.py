@@ -43,7 +43,14 @@ def crear_hallazgo(request):
 def crear_causas(request, pk):
     obj = Hallazgo.objects.get(pk=pk)
     count_causas = Hallazgo.objects.get(pk=pk).causa_set.all().count()
-    Causaformset = inlineformset_factory(Hallazgo, Causa, form=HallazgoCreateForm, extra=20)
+    Causaformset = inlineformset_factory(Hallazgo, Causa, form=HallazgoCreateForm)
+
+    data = {
+        'form-TOTAL_FORMS': '5',
+        #'form-INITIAL_FORMS': '0',
+        #'form-INITIAL_FORMS': '0',
+    }
+    
     if request.method == 'POST':
         formset = Causaformset(request.POST, instance=obj)
         if formset.is_valid():

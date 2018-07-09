@@ -3,22 +3,27 @@
 {% block content %}
 {% include 'componentes/navbar.html' %}
 
-<div class="container">
-    <div class="row">
-        <div class="col-3">
-            <h3># de Causas</h3>
-            <h2>{{ count_causas }}</h2>
-
+<div class="container-fluid">
+    <div class="row mt-4">
+        <div class="col-2">
+            <blockquote class="blockquote text-center">
+                <h3 class="font-weight-light"># de Causas</h3>
+                <button type="button" class="btn btn-dark">
+                    <h2>
+                        <strong>{{ count_causas }}</strong>
+                    </h2>
+                </button>
+            </blockquote>
             
         </div>
-        <div class="col-6">
+        <div class="col-7">
             <form method="POST">{% csrf_token %}
                 <div class="row">
                     <div class="col">
                         <div class="row">
                             <h4>Materiales</h4>
-                            {{ formset.management_form }} {% for form in formset|slice:"0:5" %} {{ form.id }}
-                            <div class="col-10 list-group-item-action">{{ form.causa }}{{ form.DELETE }}</div>
+                            {{ formset.management_form }}{% for form in formset|slice:"0:5" %}{{ form.id }}
+                            <div class="col-10">{{ form.causa }}{{ form.DELETE }}</div>
                             {% endfor %}
                         </div>
                     </div>
@@ -53,8 +58,8 @@
                 <input class="float-right position-sticky fixed-top sticky-top align-top" type="submit" value="Actualizar">
             </form>
         </div>
-        <div class="col">
-            <h2>{{ obj }}</h2>
+        <div class="col-3 bg-secondary h-100 align-self-center">
+            <h3 class="align-middle font-weight-light">{{ obj }}</h3>
         </div>
     </div>
 </div>

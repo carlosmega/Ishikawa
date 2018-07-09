@@ -4,6 +4,8 @@ from django.forms import ModelForm
 from .models import Hallazgo
 from .models import Causa
 
+from django.forms import inlineformset_factory
+
 class HallazgoCreateForm(ModelForm):
     class Meta:
         model = Causa
@@ -16,5 +18,6 @@ class HallazgoForm(ModelForm):
         model = Hallazgo
         fields = '__all__'
 
-
+Causaformset = inlineformset_factory(Hallazgo, Causa, form=HallazgoCreateForm, extra=20)
+formset = Causaformset()
 
