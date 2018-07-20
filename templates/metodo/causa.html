@@ -25,6 +25,7 @@
                             {{ formset.management_form }}{% for form in formset|slice:"0:5" %}{{ form.id }}
                             <div class="col-10">{{ form.causa }}{{ form.DELETE }}</div>
                             {% endfor %}
+                            
                         </div>
                     </div>
                     <div class="col">
@@ -62,5 +63,8 @@
             <h3 class="align-middle font-weight-light">{{ obj }}</h3>
         </div>
     </div>
+    <hr>
+
+
 </div>
 {% endblock %}

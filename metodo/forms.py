@@ -7,9 +7,17 @@ from .models import Causa
 from django.forms import inlineformset_factory
 
 class HallazgoCreateForm(ModelForm):
+
     class Meta:
         model = Causa
-        fields = ['causa']
+        fields = ['hallazgo','causa']
+
+    def clean(self):
+        cleaned_data = super(HallazgoCreateForm, self).clean()
+        hallazgo = cleaned_data.get('hallazgo')
+        causa = cleaned_data.get('causa')
+        if not hallazgo and not causa:
+            raise forms.ValidationError('You have to write something!')
 
 class HallazgoForm(ModelForm):
     hallazgo = forms.CharField(widget=forms.TextInput(attrs={'class': 'formulario_hallazgo'}))
@@ -18,6 +26,5 @@ class HallazgoForm(ModelForm):
         model = Hallazgo
         fields = '__all__'
 
-Causaformset = inlineformset_factory(Hallazgo, Causa, form=HallazgoCreateForm, extra=20)
-formset = Causaformset()
+
 

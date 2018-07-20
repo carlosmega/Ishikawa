@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404
 
 from django.views.generic import ListView
 
@@ -43,13 +44,7 @@ def crear_hallazgo(request):
 def crear_causas(request, pk):
     obj = Hallazgo.objects.get(pk=pk)
     count_causas = Hallazgo.objects.get(pk=pk).causa_set.all().count()
-    Causaformset = inlineformset_factory(Hallazgo, Causa, form=HallazgoCreateForm)
-
-    data = {
-        'form-TOTAL_FORMS': '5',
-        #'form-INITIAL_FORMS': '0',
-        #'form-INITIAL_FORMS': '0',
-    }
+    Causaformset = inlineformset_factory(Hallazgo, Causa, form=HallazgoCreateForm, extra=20 ,max_num=20)
     
     if request.method == 'POST':
         formset = Causaformset(request.POST, instance=obj)
@@ -107,5 +102,26 @@ def kaizen(request, pk):
     }
     
     return render(request, 'metodo/kaizen.html', context)
+
+
+def formulario(request, pk):
+    obj = get_object_or_404(Hallazgo, pk=pk)
+    #obj = Hallazgo.objects.get(pk=pk)
+    form = HallazgoCreateForm
+
+    if request.method == 'POST':
+        f = form(request.POST or None, instance=obj)
+        if f.is_valid():
+            print(f)
+            f.save()
+            return redirect('metodo:formulario', pk=pk)
+    else:
+        f = form(instance=obj)
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'metodo/formulario.html', context)
+
 
 

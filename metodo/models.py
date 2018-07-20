@@ -13,8 +13,15 @@ class Hallazgo(models.Model):
     def get_absolute_url(self):
         return reverse('metodo:causas', kwargs={'pk': self.pk})
 
+class Agrupador(models.Model):
+    agrupador = models.CharField(max_length=20, blank=True, null=True)
+
+    def __str__(self):
+        return self.agrupador
+
 class Causa(models.Model):
     hallazgo = models.ForeignKey(Hallazgo, on_delete=models.CASCADE, blank=True, null=True)
+    agrupador = models.ForeignKey(Agrupador, on_delete=models.CASCADE, blank=True, null=True)
     causa = models.CharField(max_length=350, blank=True, null=True)
     sev = models.DecimalField(max_digits=3, decimal_places=0, blank=True, null=True)
     det = models.DecimalField(max_digits=3, decimal_places=0, blank=True, null=True)

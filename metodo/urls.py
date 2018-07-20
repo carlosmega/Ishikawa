@@ -22,6 +22,7 @@ from .views import crear_causas
 from .views import ListaHallazgos
 from .views import amef
 from .views import kaizen
+from .views import formulario
 
 app_name = 'metodo'
 
@@ -32,4 +33,5 @@ urlpatterns = [
     url(r'^hallazgo/(?P<pk>\d+)/amef/$', amef, name='amef'),
     url(r'^hallazgo/(?P<pk>\d+)/kaizen/$', kaizen, name='kaizen'),
     url(r'^lista/', ListaHallazgos.as_view(), name='lista_hallazgos'),
+    url(r'^formulario/(?P<pk>\d+)/$', formulario, name='formulario'),
 ]
