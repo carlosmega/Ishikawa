@@ -1,70 +1,70 @@
 {% extends 'base/base.html' %}
-
 {% block content %}
 {% include 'componentes/navbar.html' %}
 
-<div class="container-fluid">
-    <div class="row mt-4">
-        <div class="col-2">
-            <blockquote class="blockquote text-center">
-                <h3 class="font-weight-light"># de Causas</h3>
-                <button type="button" class="btn btn-dark">
-                    <h2>
-                        <strong>{{ count_causas }}</strong>
-                    </h2>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ingresar Nueva Causa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
                 </button>
-            </blockquote>
-            
-        </div>
-        <div class="col-7">
-            <form method="POST">{% csrf_token %}
-                <div class="row">
-                    <div class="col">
-                        <div class="row">
-                            <h4>Materiales</h4>
-                            {{ formset.management_form }}{% for form in formset|slice:"0:5" %}{{ form.id }}
-                            <div class="col-10">{{ form.causa }}{{ form.DELETE }}</div>
-                            {% endfor %}
-                            
-                        </div>
+            </div>
+            <div class="modal-body">
+                <form method="POST">{% csrf_token %}
+                    {{ form }}
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Actualizar</button>
                     </div>
-                    <div class="col">
-                        <div class="row">
-                            <h4>Herramientas</h4>
-                            {{ formset.management_form }}{% for form in formset|slice:"5:10" %}{{ form.id }}
-                            <div class="col-10">{{ form.causa }}{{ form.DELETE }}</div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="w-100">
-                        <hr>
-                    </div>
-                    <div class="col">
-                        <div class="row">
-                            {{ formset.management_form }}{% for form in formset|slice:"10:15" %}{{ form.id }}
-                            <div class="col-10">{{ form.causa }}{{ form.DELETE }}</div>
-                            {% endfor %}
-                            <h4>Mano de Obra</h4>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="row">
-                            {{ formset.management_form }}{% for form in formset|slice:"15:20" %}{{ form.id }}
-                            <div class="col-10">{{ form.causa }}{{ form.DELETE }}</div>
-                            {% endfor %}
-                            <h4>Procesos</h4>
-                        </div>
-                    </div>
-                </div>
-                <input class="float-right position-sticky fixed-top sticky-top align-top" type="submit" value="Actualizar">
-            </form>
-        </div>
-        <div class="col-3 bg-secondary h-100 align-self-center">
-            <h3 class="align-middle font-weight-light">{{ obj }}</h3>
+                </form>
+            </div>
         </div>
     </div>
-    <hr>
-
-
 </div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2"># de Causas {{ count_causas }}</div>
+        <div class="col-7">
+            <div class="row">
+                <div class="col">
+                    <h4>Procesos</h4>{% for proceso in procesos %}
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">{% for obj in objslug %} {% for slu in objeto_causas %}
+                            <a href="{% url 'metodo:editar_causa' pk=objeto.pk slug=obj.slug%}">{% endfor %}{% endfor %}{{ proceso }}</a></li>    
+                    </ul>{% endfor %}
+                </div>
+                <div class="col">
+                    <h4>Mano de obra</h4>
+                    <ul class="list-group list-group-flush">
+                        {% for mano in manodeobra %}
+                        <li class="list-group-item">{{ mano }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="w-100"><hr></div>
+                <div class="col">
+                    <h4>Herramientas</h4>
+                    <ul class="list-group list-group-flush">
+                        {% for tool in herramientas %}
+                        <li class="list-group-item">{{ tool }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col">
+                    <h4>Materiales</h4>
+                    <ul class="list-group list-group-flush">
+                        {% for ext in externos %}
+                        <li class="list-group-item">{{ ext }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col hallazgo">{{ objeto }}</div>
+    </div>
+</div>
+
 {% endblock %}

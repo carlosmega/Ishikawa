@@ -11,6 +11,7 @@ from django.forms import inlineformset_factory
 
 from .forms import HallazgoForm
 from .forms import HallazgoCreateForm
+from .forms import EdithCausa
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -42,24 +43,58 @@ def crear_hallazgo(request):
 
 @login_required()
 def crear_causas(request, pk):
-    obj = Hallazgo.objects.get(pk=pk)
+    procesos = Causa.objects.filter(hallazgo__pk=pk).filter(agrupador__agrupador='Procesos')
+    herramientas = Causa.objects.filter(hallazgo__pk=pk).filter(agrupador__agrupador='Herramientas')
+    manodeobra = Causa.objects.filter(hallazgo__pk=pk).filter(agrupador__agrupador='Mano de Obra')
+    externos = Causa.objects.filter(hallazgo__pk=pk).filter(agrupador__agrupador='Externos')
+    objeto = Hallazgo.objects.get(pk=pk)
     count_causas = Hallazgo.objects.get(pk=pk).causa_set.all().count()
-    Causaformset = inlineformset_factory(Hallazgo, Causa, form=HallazgoCreateForm, extra=20 ,max_num=20)
-    
+    objeto_causas = Causa.objects.all()
+    objslug = Causa.objects.filter(hallazgo__pk=pk)
+    form = HallazgoCreateForm
+
     if request.method == 'POST':
-        formset = Causaformset(request.POST, instance=obj)
-        if formset.is_valid():
-            formset.save()
-            return redirect('metodo:causas', pk=pk)
+        form = HallazgoCreateForm(request.POST)
+        if form.is_valid():
+            form.save()
     else:
-        formset = Causaformset(instance=obj)
+        form = HallazgoCreateForm()
 
     context = {
-        'obj': obj,
-        'formset': formset,
+        'procesos': procesos,
+        'herramientas': herramientas,
+        'manodeobra': manodeobra,
+        'externos': externos,
+        'objeto': objeto,
         'count_causas': count_causas,
+        'objeto_causas': objeto_causas,
+        'form': form,
+        'objslug': objslug,
     }
     return render(request, 'metodo/causa.html', context)
+
+def editar_causas(request, pk, slug):
+    obj_slug = Causa.objects.get(slug=slug)
+    obj_hallazgo = Causa.objects.filter(hallazgo__pk=pk)
+
+    data = {
+        'hallazgo': obj_hallazgo,
+        'causa': obj_slug,
+    }
+
+    if request.method == 'POST':
+        form = EdithCausa(request.POST, data)
+        if form.is_valid():
+            obj_slug.causa = form.cleaned_data['causa']
+            obj_slug.save()
+            return redirect('metodo:causas', pk=pk)
+    else:
+        form = EdithCausa(data)
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'metodo/editar_causas.html', context)
 
 
 @login_required()

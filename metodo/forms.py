@@ -6,11 +6,18 @@ from .models import Causa
 
 from django.forms import inlineformset_factory
 
+class EdithCausa(ModelForm):
+    class Meta:
+        model = Causa
+        fields = ['hallazgo','causa']
+
+    
+
 class HallazgoCreateForm(ModelForm):
 
     class Meta:
         model = Causa
-        fields = ['hallazgo','causa']
+        fields = ['hallazgo','agrupador','causa']
 
     def clean(self):
         cleaned_data = super(HallazgoCreateForm, self).clean()

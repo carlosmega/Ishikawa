@@ -1,6 +1,7 @@
 from django.db import models
-
 from django.urls import reverse
+
+from django.template.defaultfilters import slugify
 
 # Create your models here.
 class Hallazgo(models.Model):
@@ -31,6 +32,7 @@ class Causa(models.Model):
     responsable = models.CharField(max_length=350, blank=True, null=True)
     fecha_cierre = models.DateField(blank=True, null=True)
     comentarios = models.CharField(max_length=350, blank=True, null=True)
+    slug = models.SlugField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return self.causa
@@ -41,17 +43,8 @@ class Causa(models.Model):
         return self.rpn
 
     def save(self, *args, **kwargs):
-        try:
-            self.rpn = self.sev * self.det * self.occ
-            super().save(*args, **kwargs)
-        except:
-            super().save(*args, **kwargs)
-
-
-
-
-        
-
+        self.slug = slugify(self.causa)
+        super(Causa, self).save(*args, **kwargs)
 
         """
         if self.sev == 'NoneType' or self.det == 'NoneType' or self.occ == 'NoneType':

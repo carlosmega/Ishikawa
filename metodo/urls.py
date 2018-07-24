@@ -23,6 +23,7 @@ from .views import ListaHallazgos
 from .views import amef
 from .views import kaizen
 from .views import formulario
+from .views import editar_causas
 
 app_name = 'metodo'
 
@@ -30,7 +31,8 @@ urlpatterns = [
     url(r'^hallazgo/$', crear_hallazgo, name='hallazgo'),
     url(r'^portada/$', TemplateView.as_view(template_name='metodo/portada.html'), name='portada'),
     url(r'^hallazgo/(?P<pk>\d+)/$', crear_causas, name='causas'),
-    url(r'^hallazgo/(?P<pk>\d+)/amef/$', amef, name='amef'),
+    url(r'^hallazgo/(?P<pk>\d+)/(?P<slug>[-\w]+)/$', editar_causas, name='editar_causa'),
+    url(r'^hallazgo/amef/(?P<pk>\d+)/$', amef, name='amef'),
     url(r'^hallazgo/(?P<pk>\d+)/kaizen/$', kaizen, name='kaizen'),
     url(r'^lista/', ListaHallazgos.as_view(), name='lista_hallazgos'),
     url(r'^formulario/(?P<pk>\d+)/$', formulario, name='formulario'),
