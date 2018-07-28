@@ -37,14 +37,13 @@ class Causa(models.Model):
     def __str__(self):
         return self.causa
 
-    def rpn_sesultado(self):
-        self.rpn = self.sev * self.det * self.occ
-        self.rpn.save()
-        return self.rpn
-
+    
+     
     def save(self, *args, **kwargs):
         self.slug = slugify(self.causa)
         super(Causa, self).save(*args, **kwargs)
+        
+    
 
         """
         if self.sev == 'NoneType' or self.det == 'NoneType' or self.occ == 'NoneType':

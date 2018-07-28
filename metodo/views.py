@@ -16,6 +16,11 @@ from .forms import EdithCausa
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+from django.db.models import F, Sum
+
+
+
+
 # Create your views here.
 
 
@@ -101,16 +106,17 @@ def editar_causas(request, pk, slug):
 def amef(request, pk):
     #rpn = Hallazgo.objects.get(pk=pk).causa_set.all()
     obj = Hallazgo.objects.get(pk=pk)
+    mult = Causa.objects.filter(hallazgo__pk=pk)
     formsetCausa = inlineformset_factory(Hallazgo, Causa, fields=('hallazgo', 'causa', 'sev', 'det', 'occ', 'rpn'), extra=0)
     if request.method == 'POST':
-        formset = formsetCausa(request.POST, instance=obj)
+        formset = formsetCausa(request.POST or None, instance=obj)
         if formset.is_valid():
             formset.save()
-            return redirect('metodo:amef', pk=pk)
     else:
         formset = formsetCausa(instance=obj)
 
     context = {
+        'mult':mult,
         'obj': obj,
         'formset': formset,
         #'rpn': rpn,
@@ -122,8 +128,7 @@ def amef(request, pk):
 @login_required()
 def kaizen(request, pk):
     obj = Hallazgo.objects.get(pk=pk)
-
-    Causaformset = inlineformset_factory(Hallazgo, Causa, fields=('hallazgo', 'causa', 'rpn', 'solucion', 'responsable', 'fecha_cierre', 'comentarios'), extra=0)
+    Causaformset = inlineformset_factory(Hallazgo, Causa, fields=('hallazgo', 'causa', 'rpn', 'solucion', 'responsable', 'fecha_cierre'), extra=0)
     if request.method == 'POST':
         formset = Causaformset(request.POST, instance=obj, queryset=Causa.objects.filter(rpn__gt=3))
         if formset.is_valid():
@@ -159,4 +164,7 @@ def formulario(request, pk):
     return render(request, 'metodo/formulario.html', context)
 
 
+def entrar():
+
+    return login().form
 

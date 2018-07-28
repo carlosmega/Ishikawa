@@ -1,31 +1,47 @@
-{% extends "base/base.html" %} {% block content %}
+<!DOCTYPE html>
+<html lang="es">
 
-<div class="container">
-    <div class='row text-center'>
-        <div class='col-sm-6 text-center col-sm-offset-3'>
-            <h1>Login</h1>
-            {% if form.errors %}
-            <p>Tu usuario y contrasena son incorrectos. Porfavor intenta de nuevo.</p>
-            {% endif %} {% if next != "/" and next is not None %} {% if user.is_authenticated %}
-            <p>Your account doesn't have access to this page. To proceed, please login with an account that has access.</p>
-            {% else %}
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ishikawa App</title>
+    <link rel="stylesheet" href="{% static 'signin.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+</head>
+
+<body class="text-center">
+    <div class='col-sm-6 text-center col-sm-offset-3'>
+        {% if form.errors %}
+        <p>Tu usuario y contrasena son incorrectos. Porfavor intenta de nuevo.</p>
+        {% endif %} {% if next != "/" and next is not None %} {% if user.is_authenticated %}
+        <p>Your account doesn't have access to this page. To proceed, please login with an account that has access.</p>
+        {% else %} {% endif %} {% endif %}
+        <form class="form-signin" method="post" action="{% url 'login' %}">{% csrf_token %}
+            <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+            <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
             <p>Please login to see this page.</p>
-            {% endif %} {% endif %}
-    
-            <form method="post" action="{% url 'login' %}">
-                {% csrf_token %} {{ form.as_p }}
-    
-                <input type="submit" value="login" />
-                <input type="hidden" name="next" value="{{ next }}" />
-            </form>
-    
-            <p>Need to
-                <a href='#'>register</a>?</p>
-        </div>
+            <label for="username" class="sr-only">Username</label>
+            <input type="text" name="username" autofocus maxlength="254" required id="username" class="form-control" placeholder="Ingresar Username">
+            <label for="password" class="sr-only">Password</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+        </form>
     </div>
-    
-    {# Assumes you setup the password_reset view in your URLconf #} {% endblock %}
 
-</div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
+
+
 
 

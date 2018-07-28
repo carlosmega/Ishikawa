@@ -31,3 +31,5 @@ urlpatterns = [
     url(r'^$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': '/'} , name='logout'),
 ]
+
+

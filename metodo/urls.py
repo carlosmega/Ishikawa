@@ -33,7 +33,7 @@ urlpatterns = [
     url(r'^hallazgo/(?P<pk>\d+)/$', crear_causas, name='causas'),
     url(r'^hallazgo/(?P<pk>\d+)/(?P<slug>[-\w]+)/$', editar_causas, name='editar_causa'),
     url(r'^hallazgo/amef/(?P<pk>\d+)/$', amef, name='amef'),
-    url(r'^hallazgo/(?P<pk>\d+)/kaizen/$', kaizen, name='kaizen'),
+    url(r'^hallazgo/kaizen/(?P<pk>\d+)/$', kaizen, name='kaizen'),
     url(r'^lista/', ListaHallazgos.as_view(), name='lista_hallazgos'),
     url(r'^formulario/(?P<pk>\d+)/$', formulario, name='formulario'),
 ]
