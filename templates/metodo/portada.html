@@ -1,7 +1,22 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-{% include 'componentes/navbar.html' %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-light ">
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="col-10 navbar-nav">
+            <a class="nav-item nav-link active" href="{% url 'metodo:portada' %}">Inicio
+                <span class="sr-only">(current)</span>
+            </a>
+            <a class="nav-item nav-link" href="{% url 'metodo:lista_hallazgos' %}">Hallazgos</a>
+            <a class="nav-item nav-link" href="{% url 'metodo:hallazgo' %}">Nuevo</a>
+            <a class="nav-item nav-link" href="#">Pendientes</a>
+            
+        </div>
+        <div class="col align-self-end float-right align-bottom">
+            <a class="btn btn-outline-danger" href="{% url 'logout' %}" role="button">Salir</a>
+        </div> 
+    </div>
+</nav>
 <div class="container">
     <div class="row">
         <div class="col mt-4">
@@ -21,8 +36,10 @@
             <div class="row">
                 <div class="col">
                     <div class="jumbotron">
-                        <h1 class="display-4">Consultar Lista</h1>
-                        <p class="lead">Revisa todos los diagramas que tienes en ejecucion</p>
+                        <h1 class="display-4">Lista de Ishikawas</h1>
+                        <p class="lead">Revisa todos los diagramas que tienes en ejecucion
+                            <br>
+                        </p>
                         <hr class="my-4">
                         <p>Click abajo para consultar la lista</p>
                         <p class="lead">
@@ -34,7 +51,7 @@
         </div>   
     </div>
     <p class="lead">
-        <a class="btn btn-success btn-lg" href="{% url 'logout' %}" role="button">Salir</a>
+        
     </p>
 </div>
 

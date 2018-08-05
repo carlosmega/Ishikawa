@@ -37,11 +37,12 @@ class Causa(models.Model):
     def __str__(self):
         return self.causa
 
-    
-     
     def save(self, *args, **kwargs):
         self.slug = slugify(self.causa)
         super(Causa, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('metodo:editar_causa', kwargs={'pk': self.hallazgo.pk, 'slug': self.slug})
         
     
 
